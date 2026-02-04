@@ -5,6 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.io.IOException;
 import java.util.Map; // 导入Map类
 public class SetPointCommand implements CommandExecutor {
 
@@ -18,13 +20,15 @@ public class SetPointCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // 1. 判断是否为玩家
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("§c❌ 只有玩家才能设置传送点！");
             return true;
         }
 
+        Player player = (Player) sender;
+
         // 2. 判断是否有权限（OP默认拥有）
-        if (!player.hasPermission("teleportpoints.use") && !player.isOp()) {
+        if (!player.hasPermission("teleportpoints.command.set") && !player.isOp()) {
             player.sendMessage("§c❌ 你没有使用该命令的权限！");
             return true;
         }
@@ -35,18 +39,22 @@ public class SetPointCommand implements CommandExecutor {
             return false; // 触发Bukkit原生用法提示
         }
 
-        // 4. 处理传送点重名提示
-        String pointName = args[0];
-        Map<String, Location> existingPoints = plugin.getPoints(player.getUniqueId());
-        if (existingPoints.containsKey(pointName)) {
-            player.sendMessage("§e⚠️  传送点 " + pointName + " 已存在，将覆盖原有位置！");
+
+        switch (args[0]){
+            case "create":
+                create(player,args[1]);
+                break;
         }
+        return false;
+    }
 
-        // 5. 保存传送点
-        Location playerLocation = player.getLocation();
-        plugin.addPoint(player.getUniqueId(), pointName, playerLocation);
-        player.sendMessage("§a✅ 传送点 " + pointName + " 设置成功！坐标：X=" + playerLocation.getBlockX() + " Y=" + playerLocation.getBlockY() + " Z=" + playerLocation.getBlockZ());
-
-        return true;
+    public void create(Player player,String name){
+        TeleportPointsPlugin.YamlPointMap.set(name+ ".owner",player.getName());
+        TeleportPointsPlugin.YamlPointMap.set(name+ ".location",player.getLocation().toString());
+        try {
+            TeleportPointsPlugin.YamlPointMap.save(TeleportPointsPlugin.PointMap);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

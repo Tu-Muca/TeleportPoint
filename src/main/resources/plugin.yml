@@ -7,17 +7,13 @@ website: 可选（填你的服务器地址或空着）
 
 # 命令配置
 commands:
-  setpoint:
+  TeleportPoint:
     description: 设置个人传送点
     usage: /<command> <传送点名称>
-    aliases: [sp, 设点] # 别名，可用/sp或/设点快速执行
-  tppanel:
-    description: 打开传送点选择面板
-    usage: /<command>
-    aliases: [tpd, 传送面板]
+    aliases: [tpp] # 别名，可用/sp或/设点快速执行
 
 # 权限配置
 permissions:
-  teleportpoints.use:
+  teleportpoints.command.set:
     description: 使用传送点插件的所有功能
     default: op # 默认只有OP能使用，改为true则所有玩家可使用
