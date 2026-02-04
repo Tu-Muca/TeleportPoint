@@ -1,4 +1,4 @@
-package com;
+package com.tumine.TeleportPoint;
 
 import org.bukkit.Location;
 import org.bukkit.command.Command;

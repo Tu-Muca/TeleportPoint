@@ -1,4 +1,4 @@
-package com; // 你的包名是com，和文件夹结构一致
+package com.tumine.TeleportPoint; // 你的包名是com，和文件夹结构一致
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

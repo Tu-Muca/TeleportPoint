@@ -1,5 +1,5 @@
-name: TeleportPointsPlugin
-main: com.example.TeleportPointsPlugin
+name: TeleportPoints
+main: com.tumine.TeleportPoint.TeleportPointsPlugin
 version: 1.0.0
 author: 你的名字
 description: 简单好用的个人传送点插件
