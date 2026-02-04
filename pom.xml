@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.example</groupId>
+  <artifactId>TeleportPointsPlugin</artifactId> <!-- 把名字改成插件名，方便识别 -->
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>TeleportPointsPlugin</name>
+  <url>http://maven.apache.org</url>
+
+  <!-- 注意：Spigot 1.20/1.21 只支持 Java 17+，别用 Java 25（容易出问题） -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
+
+  <!-- 仓库地址（放 dependencies 上面） -->
+  <repositories>
+    <repository>
+      <id>spigotmc-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+      <id>bukkit-repo</id>
+      <url>https://repo.bukkit.org/content/groups/public/</url>
+    </repository>
+  </repositories>
+
+  <!-- 依赖（只留一个正确的 Spigot 版本） -->
+  <dependencies>
+  <dependency>
+    <groupId>org.spigotmc</groupId>
+    <artifactId>spigot-api</artifactId>
+    <version>1.21.11-R0.1-SNAPSHOT</version> <!-- 用 1.20.1 稳定版本 -->
+    <scope>provided</scope>
+  </dependency>
+</dependencies>
+
+        <!-- 打包插件的配置（可选，能自动生成插件 jar） -->
+<build>
+<plugins>
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <version>3.2.2</version>
+    <configuration>
+      <archive>
+        <manifestEntries>
+          <Main-Class>com.example.TeleportPointsPlugin</Main-Class>
+        </manifestEntries>
+      </archive>
+    </configuration>
+  </plugin>
+</plugins>
+</build>
+        </project>
